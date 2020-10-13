@@ -1,0 +1,100 @@
+# Solutions
+
+## 1. 
+
+According to a research institution, the average credit card debt among college
+students in a certain year was \$275.00. Assume the population standard
+deviation is \$25.00 and that a random sample of 49 hotels was selected.
+
+### 1a. Calculate the standard error of the mean.
+
+$$\sigma_{\bar x} = \frac{\sigma}{\sqrt{n}} = \frac{25}{\sqrt{49}} = 3.57$$
+
+### 1b. What is the probability that the sample mean will be less than \$262?
+
+$P(\bar x < 262) = \frac{262 - 275}{3.57} = -3.64$
+
+=NORM.S.DIST(-3.64, TRUE) = 0.00014
+
+### 1c. What is the probability that the sample mean will be greater than \$280?
+
+$$P(\bar x >280)=1 - P(\bar x < 280)$$
+
+$$\frac{280 - 275}{3.57} = 1.4$$
+
+$=1 - NORM.S.DIST(1.4, TRUE) = 1 - 0.92 = 0.08$
+
+### 1d. What is the probability that the sample mean will be between \$268 and \$282? 
+
+$$P(268 < \bar x < 282) = P(\bar x < 282) - P(\bar x < 268)$$
+
+$$(\frac{282 - 275}{3.57}) = 1.96$$
+
+$$(\frac{268 - 275}{3.57}) = -1.96$$
+
+$=NORM.S.DIST(1.96, TRUE) - NORM.S.DIST(-1.96, TRUE)= 95$
+
+```{r}
+xbar = 268
+mu = 275
+sd = 25
+n = 49
+se = sd / sqrt(n)
+
+(xbar - mu) / se
+
+pnorm(1.96)- pnorm(-1.96)
+```
+
+***
+
+## 2. 
+
+According to a study, college students spent 1.7 hours per day using Instagram.
+Assume the population standard deviation is 0.4 hours per day. A random sample
+of 32 students were selected, and had a sample average of 2.1 hours of
+electronic media use per day.
+
+### 2a. 
+
+Is there support for the claim of the study using the criteria that the sample
+average of 1.9 hours falls within the symmetrical interval that includes 95% of
+the sample means if the true population mean is 1.7 hours?
+
+
+Calculate the standard error:
+
+$$\sigma_{\bar x} = \frac{\sigma}{\sqrt{n}} = 0.4/\sqrt{32} = 0.07071068$$
+
+Find the z-score:
+
+$$P(X > 1.9) = 1 - P(X< 1.9)$$
+
+$$z = \frac{1.9 - 1.7}{0.07071068} = 2.828$$
+
+$$=1-NORM.S.DIST(2.828) = 0.0023$$
+
+Therefore this indicates that the sample average of 1.9 hours falls outside the
+95% symmetrical interval, contradicting the claim of the study.
+
+### 2b.
+
+Identify the symmetrical interval that includes 95% of the sample means if the
+true population mean is 1.7 hours of Instagram use per day.
+
+$$=NORM.S.INV(1-(1-0.95)/2) = 1.96$$
+
+$$1.7 \pm 1.96(0.071) = [1.56, 1.84]$$
+
+***
+
+## 3. 
+
+### 3a. 
+
+***
+
+## 4. 
+
+### 4a. 
+

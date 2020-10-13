@@ -1,0 +1,27 @@
+# Some practice problems
+
+## 1. Each month, a company averages 11,000 sales. Suppose the sales each month follows the normal probability distribution with a standard deviation of 1,000 sales per month. 
+
+### 1a. What is the interval around the mean that contains 95% of the attendance? 
+
+### 1b. What is the approximate probability of making less than 12,000 sales in one month?
+
+***
+
+## 2. According to a marketing website, adults spend an average of 75 minutes per day on social media. Assume that minutes spent on social media follow the normal distribution and has a standard deviation of 4 minutes. 
+
+### 2a. What is the probability that an adult is on social media for more than 82 minutes? Use both =NORM.DIST() and NORM.S.DIST().
+
+### 2b. What is the probability that an adult is on social media for between than 65 and 70 minutes? Use both =NORM.DIST() and NORM.S.DIST().
+
+***
+
+## 3. For a standard normal distribution, determine the probabilities.
+
+### 3a. P(Z < -1.23)
+
+### 3b. P(Z > 2.89)
+
+### 3b. P(-0.19 < Z < 3.02)
+
+***

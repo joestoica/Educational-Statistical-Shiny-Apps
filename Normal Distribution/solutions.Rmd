@@ -1,0 +1,65 @@
+# Some practice problems
+
+## 1. Each month, a company averages 11,000 sales. Suppose the sales each month follows the normal probability distribution with a standard deviation of 1,000 sales per month. 
+
+### 1a. What is the interval around the mean that contains 95% of the attendance? 
+
+Using the empirical rule, we know that an interval around the mean that contains
+about 95% of the area is equivalent to two standard deviations away from the 
+mean. So this is simply $[11000 - 2*1000, 11000+ 2*1000] = [9000, 13000]$
+
+### 1b. What is the approximate probability of making less than 12,000 sales in one month?
+
+Using the empirical rule, we know that 12,000 is one standard deviation above 
+the mean. This means that we can either find the area to the left of 12000, or 
+we can subtract the area to the right from 1. 
+
+For the first part, we have $0.0015 + 0.0235 + 0.135 + 0.34 + 0.34 = 0.84$
+
+Or, $1 - (0.135 + 0.0235 + 0.0015) = 0.84$
+
+***
+
+## 2. According to a marketing website, adults spend an average of 75 minutes per day on social media. Assume that minutes spent on social media follow the normal distribution and has a standard deviation of 4 minutes. 
+
+### 2a. What is the probability that an adult is on social media for more than 82 minutes? Use both =NORM.DIST() and NORM.S.DIST().
+
+Using =NORM.DIST(), we first need to figure out the sign of our calculation, and 
+then we can just plug in the information.
+
+Since it says more than, we have $P(X>82) = 1 - P(X<82)$. So in Excel, we would
+use $=1-\text{NORM.DIST}(82, 75, 4, TRUE)$
+
+For =NORM.S.DIST(), we would first need to calculate the z-score, and then plug
+it in. $Z = \frac{82-75}{4} = 1.75$. Then, we would just use $=1-\text{NORM.S.DIST}(1.75, TRUE)$.
+
+Typically, it's easier to use the unstandardized test so we can avoid calculating
+the z-score, but it's important to know how to do both.
+
+### 2b. What is the probability that an adult is on social media for between than 65 and 70 minutes? Use both =NORM.DIST() and NORM.S.DIST().
+
+Here, we are trying to solve $P(65<X<70) = P(X<70) - P(X<65)$.
+
+So using NORM.DIST(), we would have $=\text{NORM.DIST}(70, 75, 4, TRUE) - \text{NORM.DIST}(65, 75, 4, TRUE)$
+
+Using NORM.S.DIST(), we first need to calculate the z-scores.
+$Z = \frac{70-75}{4} = -0.25, Z = \frac{65-75}{4} = -2.5$. Next, plug them into
+the excel formulas. $=\text{NORM.S.DIST}(-0.25, TRUE) - \text{NORM.S.DIST}(-2.5, TRUE)$
+
+***
+
+## 3. For a standard normal distribution, determine the probabilities.
+
+### 3a. P(Z < -1.23)
+
+This is much simpler, we can just use NORM.S.DIST here.
+
+$ P(Z < -1.23) = \text{NORM.S.DIST}(-1.23, TRUE)$
+
+### 3b. P(Z > 2.89)
+
+$P(Z > 2.89) = 1 - P(Z < 2.89)= 1 - \text{NORM.S.DIST}(2.89, TRUE)$
+
+### 3b. P(-0.19 < Z < 3.02)
+$P(-0.19 < Z < 3.02)= P(Z < 3.02)- P(Z < -0.19) = \text{NORM.S.DIST}(3.02, TRUE) - \text{NORM.S.DIST}(-0.19, TRUE)$
+***
