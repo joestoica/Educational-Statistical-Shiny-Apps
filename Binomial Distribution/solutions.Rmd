@@ -100,3 +100,7 @@ $$1 - \sum_{i=1}^{15}{25 \choose i}(0.85)^i(0.15)^{25 - i}$$
 ### 4d. Solve using an excel formula
 
 * 1 - binom.dist(15, 25, 0.85, TRUE)
+
+<center>  
+![](www/curve.png)
+</center>

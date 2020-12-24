@@ -25,3 +25,7 @@
 ### 3b. P(-0.19 < Z < 3.02)
 
 ***
+
+<center>  
+![](www/curve.png)
+</center>

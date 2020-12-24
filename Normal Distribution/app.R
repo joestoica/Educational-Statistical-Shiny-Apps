@@ -3,17 +3,17 @@ library(shiny)
 
 # Define UI for application that draws a histogram
 ui <- fluidPage(
-    
-    tabsetPanel(
-        
+    theme = "theme.css",
+    navbarPage(
+        "The Normal Distribution",
         tabPanel(
-            titlePanel("Overview"),
-            withMathJax(includeMarkdown("normal.Rmd"))
+            "Overview",
+            withMathJax(includeMarkdown("breakdown.Rmd"))
         ),
         
         tabPanel(
             # Application title
-            titlePanel("Visualizing the Normal Distribution"),
+            "Visualizing the Normal Distribution",
             
             # Sidebar with a slider input for number of bins 
             sidebarLayout(
@@ -35,13 +35,16 @@ ui <- fluidPage(
                                  value = 2,
                                  min = 0
                     ),
+                    img(src = "301.png", align = "center", width="100%"),
                     
                 ),
                 # Show a plot of the generated distribution
                 mainPanel(
                     textOutput("text"),
-                    tags$head(tags$style("#text{color: black;
-                                 font-size: 32px;
+                    tags$head(tags$style("#text{
+                        color: black;
+                        font-size: 32px;
+                        background-color: white;
                                  }"
                     )),
                     plotOutput("normal"),
@@ -52,12 +55,12 @@ ui <- fluidPage(
         ),
         
         tabPanel(
-            titlePanel("Example Problems"),
+            "Example Problems",
             withMathJax(includeMarkdown("problems.Rmd"))
         ),
         
         tabPanel(
-            titlePanel("Example Solutions"),
+            "Example Solutions",
             withMathJax(includeMarkdown("solutions.Rmd"))
         )
     )
@@ -70,7 +73,7 @@ server <- function(input, output) {
         ifelse(input$sign == "<", 
                paste0("P(X ", input$sign, " ", input$xbar, ") = ", round(pnorm(input$xbar, input$mu, input$sigma), 4)),
                paste0("P(X ", input$sign, " ", input$xbar, ") = ", "1 - P(X < ", input$xbar, " ) = 1 - ",  round(pnorm(input$xbar, input$mu, input$sigma), 4), " = ", 1 - round(pnorm(input$xbar, input$mu, input$sigma), 4))
-               )
+        )
     )
     
     output$normal <- renderPlot({

@@ -63,3 +63,7 @@ $P(Z > 2.89) = 1 - P(Z < 2.89)= 1 - \text{NORM.S.DIST}(2.89, TRUE)$
 ### 3b. P(-0.19 < Z < 3.02)
 $P(-0.19 < Z < 3.02)= P(Z < 3.02)- P(Z < -0.19) = \text{NORM.S.DIST}(3.02, TRUE) - \text{NORM.S.DIST}(-0.19, TRUE)$
 ***
+
+<center>  
+![](www/curve.png)
+</center>

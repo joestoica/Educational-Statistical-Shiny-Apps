@@ -1,13 +1,55 @@
 library(tidyverse)
 library(shiny)
 
+# Define UI for application that draws a histogram
 ui <- fluidPage(
     theme = "theme.css",
     navbarPage(
-        "Confidence intervals with unknown population standard devation",
+        "Confidence Intervals",
         tabPanel(
             "Overview",
             withMathJax(includeMarkdown("breakdown.Rmd"))
+        ),
+        tabPanel(
+            "Visualizing Confidence Intervals",
+            sidebarLayout(
+                sidebarPanel(
+                    sliderInput("conf",
+                                "Confidence Level",
+                                min = 0,
+                                max = 1,
+                                value = 0.95
+                    ),
+                    sliderInput("xbar",
+                                "Observed Sample Mean (xbar)",
+                                value = 10,
+                                min = -25,
+                                max = 25
+                    ),
+                    sliderInput("mu",
+                                "Population mean (mu): ",
+                                value = 10,
+                                min = -25,
+                                max = 25
+                    ),
+                    sliderInput("sigma",
+                                "Population Standard Deviation (sigma)",
+                                value = 5,
+                                min = 1,
+                                max = 10
+                    ),
+                    sliderInput("n",
+                                "Sample Size (n)",
+                                value = 30,
+                                min = 2,
+                                max = 100
+                    ),
+                    img(src = "301.png", align = "center", width="100%"),
+                ),
+                mainPanel(
+                    plotOutput("normal"),
+                    plotOutput("standard_normal"))
+            ),
         ),
         tabPanel(
             # Application title
@@ -23,11 +65,11 @@ ui <- fluidPage(
                                  "Standard Deviation:",
                                  value = 1,
                                  min = 1e-6),
-                    numericInput("n_intervals",
+                    numericInput("n_interval",
                                  "Number of Intervals:",
                                  value = 10,
                                  min = 1,
-                                 max = 1000),
+                                 max = 100),
                     sliderInput("conf_lvl",
                                 "Confidence Level",
                                 value = 0.95,
@@ -52,89 +94,53 @@ ui <- fluidPage(
     )    
 )
 
-set.seed(301)
-
 server <- function(input, output) {
     
-    # Top plot in the first visual page of app
     output$normal <- renderPlot({
         
-        # testing values - uncomment and run these to store them in the 
-        # environment to do testing so you don't have to reload the app 
-        # everytime
-        
-        # Getting inputs
-        conf = 0.95
-        xbar = 10
-        mu = 0
-        s = 5
-        n = 30
-        
-        # Getting inputs from UI code
         conf = input$conf
         xbar = input$xbar
         mu = input$mu
-        # TODO change to t
-        s = input$s
+        sigma = input$sigma
         n = input$n
+        se = sigma / sqrt(n)
+        me = qnorm(1 - (1- conf) / 2) * se
         
-        # calculate SE
-        se = s / sqrt(n)
-        
-        # Calculate me
-        cv = qt(1 - (1 - conf) / 2, df = n-1)
-        me = cv * se
-        
-        # Confidence Interval
         upper = xbar + me
         lower = xbar - me
-        # c(lower, upper)
         
-        # This is the upper and lower portion of the geom_dist that we want to 
-        # draw on the ggplot to make sure everything is visualized nicely
-        upper_draw = xbar + 4
-        lower_draw = xbar - 4
-        c(lower_draw, upper_draw)
+        upper_draw = xbar + 4 * se
+        lower_draw = xbar - 4 * se
         
-        # This makes the breaks on the x-axis scaled to match the ME 
-        x_axis_breaks = -4:4
+        x_axis = round(seq(lower - 3*me, upper + 3 * me, me),2)
         
-        # Calculate the data to draw geom_dist() with
         x = seq(lower_draw, upper_draw, 0.01)
-        # use the normal density to draw the shape
-        y = dt(x, df = n-1)
-
-        plot(x,y)
-                
-        # temp dataframe to draw ggplot with
+        y = dnorm(x, xbar, se)
+        
         df = data.frame(x, y)
+        
         df %>% 
             ggplot(aes(x,y)) +
-            # fills the area within the CI
             geom_area(data = df %>% filter(x >= lower,
                                            x <= upper),
                       mapping = aes(x), 
-                      fill = "red", alpha = 0.5) +
-            # lower CV line
+                      fill = "#1790D2") +
+            # lower line
             geom_segment(aes(x = lower, y = 0, 
-                             xend = lower, yend = dt(lower, df = n-1))) +
-            # upper CV line
+                             xend = lower, yend = dnorm(lower, xbar, se))) +
+            # upper line
             geom_segment(aes(x = upper, y = 0, 
-                             xend = upper, yend = dt(upper, df= n-1))) +
-            # Population mean line
+                             xend = upper, yend = dnorm(upper, xbar, se))) +
+            # mu
             geom_segment(aes(x = mu, y = 0, 
-                             xend = mu, yend = dt(mu, df = n-1)),
-                         color = "#8080FF", size = 2) +
+                             xend = mu, yend = dnorm(mu, xbar, se)),
+                         color = "#FC2B1C", size = 2) +
             theme_minimal() +
-            # draw the density plot
             geom_line() +
             geom_hline(yintercept = 0) +
-            # scale x_axis
-            scale_x_continuous(breaks = x_axis_breaks,
+            scale_x_continuous(breaks = x_axis,
                                limits = c(lower_draw, upper_draw))+
-            # shorten y-axis, ran into some errors without this.
             ylim(c(0, max(y)+0.1)) +
-            # TODO make a better title
             labs(title = paste0(conf*100, "% confidence interval:", paste0("[", round(lower,2), ", ", round(upper, 2),"]")),
                  
                  x = "",
@@ -144,21 +150,13 @@ server <- function(input, output) {
     
     output$standard_normal <- renderPlot({
         
-        # this function is very similar to the one above, except this function
-        # scales the x axis to illustrate how the CI changes when n, sd, or conf
-        # level changes.
-        
-        # TODO - maybe there is a way to speed up this calculation by combining 
-        # with the function above, low priority for now.
-        
         conf = input$conf
         xbar = input$xbar
         mu = input$mu
-        s = input$s
+        sigma = input$sigma
         n = input$n
-        # TODO change to t
-        se = s / sqrt(n)
-        me = qt(1 - (1- conf) / 2, df = n-1) * se
+        se = sigma / sqrt(n)
+        me = qnorm(1 - (1- conf) / 2) * se
         
         upper = xbar + me
         lower = xbar - me
@@ -166,11 +164,10 @@ server <- function(input, output) {
         upper_draw = xbar + 4 * se
         lower_draw = xbar - 4 * se
         
-        x_axis_breaks = round(seq(lower - 10 * me, upper + 10 * me, me),2)
+        x_axis = round(seq(lower - 10 * me, upper + 10 * me, me),2)
         
         x = seq(lower_draw, upper_draw, 0.01)
-        # TODO change to t
-        y = dt(x, n-1)
+        y = dnorm(x, xbar, se)
         
         df = data.frame(x, y)
         
@@ -179,17 +176,17 @@ server <- function(input, output) {
             geom_area(data = df %>% filter(x >= lower,
                                            x <= upper),
                       mapping = aes(x), 
-                      fill = "red", alpha = 0.5) +
+                      fill = "#1790D2") +
             # lower line
             geom_segment(aes(x = lower, y = 0, 
-                             xend = lower, yend = dt(lower, df = n-1))) +
+                             xend = lower, yend = dnorm(lower, xbar, se))) +
             # upper line
             geom_segment(aes(x = upper, y = 0, 
-                             xend = upper, yend = dt(upper, df = n-1))) +
+                             xend = upper, yend = dnorm(upper, xbar, se))) +
             # mu
             geom_segment(aes(x = mu, y = 0, 
-                             xend = mu, yend = dt(mu, df = n-1)),
-                         color = "#8080FF", size = 2) +
+                             xend = mu, yend = dnorm(mu, xbar, se)),
+                         color = "#FC2B1C", size = 2) +
             theme_minimal() +
             geom_line() +
             geom_hline(yintercept = 0) +
@@ -201,16 +198,7 @@ server <- function(input, output) {
                  y = "")
     })
     
-    
-    # --------------------------------------
-    # Confidence Interval
-    # --------------------------------------
-    
-    # honestly this method isn't great and I would like to redo it.
-    # I would like to make this additive instead of random every draw.
-    
-    # Creates a sample from normal with specified mean and sd
-    # returns a list with the sample mean and sample standard deviation
+    # Confidence Interval    
     make_row <- function(n, mean, stdev) {
         data <- rnorm(n, mean, stdev)
         xbar <- mean(data)
@@ -218,19 +206,17 @@ server <- function(input, output) {
         return(list(xbar=xbar, s=s))
     }
     
-    # This function calculates the % CI and returns the lower, upper, and sample
-    # mean for that interval. Calculates z or t interval depending on input.
     make_interval <- function(df, stdev, conf_lvl, n, int_type){
-        int_type <- ifelse(int_type == "Yes", "z", "t")
         
         xbar = df$xbar
-        stdev = df$s
         
-        if(int_type == "z") {
+        int_type <- ifelse(int_type == "Yes", "z", "t")
+        
+        if (int_type == "z") {
             se <- input$stdev / sqrt(n)
             cv <- abs(qnorm((1 - conf_lvl) / 2))
         } else {
-            se <- stdev / sqrt(n)
+            se <- df$s / sqrt(n)
             cv <- abs(qt((1 - conf_lvl) / 2, df = n - 1))    
         }
         
@@ -241,36 +227,45 @@ server <- function(input, output) {
     
     output$CI_plot <- renderPlot({
         
-        # The number of simulations to run
-        sims <- input$n_intervals
+        # ci_n = 30
+        # mean = 0
+        # stdev = 1
+        # conf_lvl = 0.95 
+        # int_type = "t"
+        # n_interval = 10
         
-        # Creates the specificed number of sample means and SDs
-        sample_stats <- t(replicate(sims,  make_row(input$ci_n, input$mean, input$stdev)))
+        ci_n = input$ci_n
+        mean = input$mean
+        stdev = input$stdev
+        conf_lvl = input$conf_lvl
+        int_type = input$int_type
+        n_interval = input$n_interval
         
-        # Makes the data.frame used in plotting that contains the upper, lower,
-        # and xbar to draw each interval
+        set.seed(301)
+        sample_stats <- t(replicate(100,  make_row(ci_n, mean, stdev)))
+        
         df <- data.frame(t(apply(sample_stats, 1, make_interval, 
-                                 conf_lvl = input$conf_lvl, 
-                                 n = input$ci_n,
-                                 int_type = input$int_type)))
-        
+                                 conf_lvl = conf_lvl, 
+                                 n = ci_n,
+                                 int_type = int_type)))
         
         names(df) <- c("lower", "upper", "xbar")
         
-        # logic for coloring the geom_segment for the CI
-        df$cover <- ifelse(df$lower <= input$mean & input$mean <= df$upper, "1", "0")
+        df$cover <- ifelse(df$lower <= mean & mean <= df$upper, "1", "0")
         colors <- c("1" = "#1790D2", "0" = "#FC2B1C")
         df$row <- 1:nrow(df)
+        df = df[1:n_interval, ]
         
-        # draws plot
         ggplot(df, aes(color = cover)) +
-            geom_vline(xintercept = input$mean)+
-            geom_segment(aes(x = lower, xend = upper, y = row, yend = row))+
-            geom_point(aes(x = xbar, y = row))+
-            theme_minimal()+
-            scale_color_manual(values = colors)+
-            guides(color = FALSE)+
-            xlim(c(input$mean - 4*input$stdev, input$mean + 4*input$stdev))
+            geom_vline(xintercept = mean) +
+            geom_segment(aes(x = lower, xend = upper, y = row, yend = row), size = 2) +
+            geom_point(aes(x = xbar, y = row), size = 3) +
+            theme_minimal() +
+            scale_color_manual(values = colors) +
+            guides(color = FALSE) +
+            xlim(c(mean - 2*stdev, mean + 2*stdev)) +
+            labs(x = "",
+                 y = "")
         
     },
     height = 800) 

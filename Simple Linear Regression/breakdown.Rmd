@@ -1,0 +1,126 @@
+## Goal:
+
+Estimate a straight line that gets as close a spossible, on average, to 
+all the points on a scatterplot.
+
+- Simple linear regression analysis is used to determine a straight line that
+best fits a series of ordered pairs (x,y)
+
+- This technique is known assimpleregression because we areusing only one 
+independent variable 
+
+- Multiple regression, which includes more than one independent variable, is
+discussed in the next module!
+
+
+## Equation for a straight line
+
+$$\hat y = b_0 + b_1x$$
+
+- $b_0$ is the intercept of the line
+- $b_1$ is the slope of the line
+- $x$ is the indepedent variable, which is some value we can plug in to predict 
+a new value for y
+- $\hat y$ is the predicted value of of our response variable given some value 
+for x
+
+## Formula for the residual
+
+$$e_i = y_i - \hat y_i = y_i - b_0 + b_1x$$
+
+- This is the observed value (what we actually saw in our data) minus the value
+that the line predicts
+- This is a vertical distance and can be either positive or negative.
+
+[](residual.jpg)
+
+## The idea of least squares
+
+- This is the method that actually fits the line
+
+- Minimizes the sum of the squared residuals
+
+- Imagine that you can take all of the vertical lines representing the 
+residuals.
+    - If you square the length of those lines and add them all together, you get
+    the least squares method. 
+
+- Why do we square them?
+    - If you add in a negative residual to the sum, the answer isn't minimized.
+    - What about absolute value?
+        - Squaring makes the math proving least squares easier
+        
+## The standard error of the estimate $s_e$
+- Measures the amount of dispersion/variation of observed y values around the 
+regression line.
+
+- This is the square root of the sum of sqaures of the residuals divided by the 
+number of data points divided by $n - k - 1$, where k is the number of 
+predictors in the model
+
+$$s_e = \sqrt{\frac{y_i - \hat y_i}{n-k-1}}$$
+
+- This is measured in the same units as our response variable y, which is really
+nice for interpretation.
+
+- The smaller the $s_e$ the better!
+
+[](se.jpg)
+
+## Interpreting output
+
+[](regression_output.jpg)
+
+- Three tables
+
+- Bottom one first:
+    - The coefficient for the intercept ($b_0$) is always the first row (where 
+    it says intercept). 
+        - The coefficient for slope is below that. 
+        - Our regression line is therefore $\hat y = -28.29 + 211.63x$
+    - We can get our test statistic, p-value, and confidence interval for each
+    coefficient.
+    
+
+- Top table: 
+    - $R^2$ is the coefficient of determination
+    - You can the correlation coefficient $R$ from this.
+    - Standard error is also given.
+
+
+        
+## Population parameters vs. estimates
+
+- $y_i = \beta_0 + \beta_1 X + \epsilon_i$
+
+- This looks very similar to earlier, except now there is a residual term.
+
+- We never know our population, so let's do some inference.
+        
+## Point estimate
+
+- What if we wanted to predict a new value of y given some value of x?
+    - In our example, what if age is 21?
+        - $\hat y = -28.29 + 211.63 \times (21) = 4415.94$
+        
+## Confidence intervals for the response
+
+- We can create a confidence interval for the average y_i given some value of x.
+
+- This is not an interval for predicting a single value of y, but the **average**
+
+[](cl.jpg)
+
+- The confidence interval is for the average number of cars sold (the response) 
+for **all weeks** in which 5 TV ads (the x) were shown.
+
+## Prediction intervals for the response
+
+- Further, a prediction interval would be for a **single** week. 
+
+- This will always be wider than the CI since there is more variance in 
+predicting a single value of y.
+
+## Template tutorial
+
+- Download the template from canvas

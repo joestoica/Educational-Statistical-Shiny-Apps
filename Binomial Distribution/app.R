@@ -3,16 +3,17 @@ library(shiny)
 
 # Define UI for application that draws a histogram
 ui <- fluidPage(
-    
-    tabsetPanel(
+    theme = "theme.css",
+    navbarPage(
+        "Binomial Distribution",
         tabPanel(
-            titlePanel("What is the Binomial?"),
-            withMathJax(includeMarkdown("02-binomial.Rmd"))
+            "What is the Binomial?",
+            withMathJax(includeMarkdown("breakdown.Rmd"))
         ),
         
         tabPanel(
             # Application title
-            titlePanel("Visualizing Binomial Experiments"),
+            "Visualizing Binomial Experiments",
             
             # Sidebar with a slider input for number of bins 
             sidebarLayout(
@@ -38,7 +39,8 @@ ui <- fluidPage(
                                  value = 0,
                                  min = 0,
                                  max = 100
-                    )
+                    ),
+                    img(src = "301.png", align = "center", width="100%"),
                 ),
                 
                 # Show a plot of the generated distribution
@@ -49,12 +51,12 @@ ui <- fluidPage(
         ),
         
         tabPanel(
-            titlePanel("Example Problems"),
+            "Example Problems",
             withMathJax(includeMarkdown("problems.Rmd"))
         ),
         
         tabPanel(
-            titlePanel("Example Solutions"),
+            "Example Solutions",
             withMathJax(includeMarkdown("solutions.Rmd"))
         )
     )

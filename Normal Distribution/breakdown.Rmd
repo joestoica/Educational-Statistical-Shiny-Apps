@@ -1,0 +1,62 @@
+# The Normal Distribution
+
+* This probability distribution deals with continuous Data
+
+## Characteristics of the Normal
+
+* Has a defined mean and standard deviation
+    + Mean
+        + Can take any value $[-\infty, \infty]$
+        + The mean occurs in the center and the distribution is symmetric about 
+        the mean.
+        + The mean, median, and mode are all the same value
+    + Standard Deviation
+        + Has to be $>0$
+        + This is the "spread" of the distribution
+        + A larger standard deviation results in a more spread out distribution,
+        and a shorter peak.
+        + A smaller standard deviation results in a more narrow distribution, 
+        with a taller peak.
+
+## Using the normal to find probability
+
+* The area under the curve is related to the probability
+
+* What is the difference between $P(X < x)$ and $P(X \leq x)$?
+    + Since the data is continuous, there is technically no difference
+    + How is this different than the binomial?
+
+* How do we find $P(X = x)$? 
+     + You can't actually calculate this since it is continuous.
+         + Since the range is $[-\infty, \infty]$, how can you find the 
+         probability of exactly one data point?
+
+# The Standard Normal Distribution
+
+* This is a Normal distribution with mean of 0 and standard devation of one.
+
+* What is a z-score?
+    + $z = \frac{x - \mu}{\sigma}$
+        + This shows that the z-score is nothing more than the number of 
+        standard deviations away from the mean.
+    + What are the units of a z-score?
+        + There are none, it's standardized.
+
+# The Empirical Rule
+
+* The empirical rule is a great approximation for figuring out the probabilities
+within 1, 2, and 3 standard deviations from the mean using the areas under the
+curve. Those areas are 68%, 95%, and 99.7%.
+
+![](www/empirical_rule.png)
+
+# How do we use Excel
+
+* What is the difference between =NORM.DIST() and =NORM.S.DIST()?
+    + =NORM.DIST() takes the arguments x, mean, standard deviation, and cumulative.
+    + =NORM.S.DIST() takes only the z-score and cumulative. The s stands for
+    the standard in standard normal.
+    
+<center>  
+![](www/www/curve.png)
+</center>

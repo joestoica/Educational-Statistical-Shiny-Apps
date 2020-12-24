@@ -1,0 +1,25 @@
+# Some practice problems
+
+## 1 The average selling price of a television purchased by a random sample of 36 customers was $387. Let s be $32.
+
+### 1a. Construct a 92%  confidence interval to estimate the average selling price in the population with this sample.
+
+1. Since we do not know $\sigma$ (and s was given in the problem) we have to use
+the t-distribution.
+2. Calculate the critical values
+    - The confidence level is 95%, making $\alpha = 1 - 0.92 = 0.08$. 
+    - Divide $\alpha$ by two, which gives us 0.04.
+    - =T.INV.2T(1 - 0.04, 36 - 1) = 1.803
+3. Calculate the standard error
+    - $se = \frac{s}{\sqrt{n}} = \frac{32}{\sqrt{36}} = 5.33$
+4. Put it all together!
+    - $[387 \pm 1.803(5.33)] = [377.39, 396.61]$
+
+### 1b. What is the margin of error?
+
+Remember, this is just the right side of the confidence interval, so the 
+calculation is simply $1.96(5.33) = 10.45$
+
+<center>  
+![](www/curve.png)
+</center>

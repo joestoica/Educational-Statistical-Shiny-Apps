@@ -62,3 +62,7 @@ game. Assume each shot is independent.
 ### 4c. Solve by-hand
 
 ### 4d. Solve using an excel formula
+
+<center>  
+![](www/curve.png)
+</center>

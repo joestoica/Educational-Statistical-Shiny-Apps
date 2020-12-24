@@ -1,0 +1,77 @@
+## Relationship between two variables
+
+- **Linear relationship:** the rate of change between two variables is constant
+  - A straight line can be drawn to best fit the data
+
+- **Nonlinear relationship:** the rate of change is not constant
+  - A curved line would provide a better fit
+  
+## Independent vs. Dependent Variables
+
+- **Independent Variables:**
+  - Belongs on the x-axis
+  - Influences the other variable
+
+- **Dependent Variables:**
+  - This is the response variable
+  - It "depends" on the independent variable
+
+## Scatterplots
+
+- Highlights the relationship between two variables 
+  - Direction of the relationship
+  - Curvature
+  - Strength of the relationship
+  
+## Measures of Association between two variables
+
+### Sample covariance
+
+-  Positive value of sample covariance implies a positive linear relationship
+between x and y.
+  - As one variable increases, the second variable also tends to increase. 
+  - As one variable decreases, the second variable also tends to decrease.
+  
+-  Negative value of sample covariance implies a negative linear relationship
+between x and y.
+  - As one variable increases, the second variable also tends to decrease. 
+  - As one variable decreases, the second variable also tends to increase
+  
+- A sample covariance close to zero indicates no linear relationship  
+
+- Does not give info on strength of relationship
+
+### Sample correlation coefficient
+
+- The correlation coefficient is known as $r$. 
+  - This has a range of $-1 \leq r \leq 1$
+  
+- A positive value of sample correlation implies a positive linear relationship 
+between x and y.
+
+- A negative value of sample correlation implies a positive negative relationship 
+between x and y.
+
+- A sample correlation close to zero indicates no linear relationship  
+
+- The closer the correlation is to -1 or 1, the stronger the relationship is in
+that direction
+
+### The sample coefficient of, $R^2$
+
+- This value is simply the correlation coefficient, $r$, squared. 
+
+- This explains the amount of total variation in y explained by x. 
+
+- The larger the value, the better, because we would like to explain as much of 
+the variation as possible.
+
+### Excel Functions:
+
+=COVARIANCE.S(Column A, Column B)
+
+=CORREL(Column A, Column B)
+
+<center>  
+![](www/curve.png)
+</center>

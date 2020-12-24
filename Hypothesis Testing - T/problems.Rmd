@@ -1,0 +1,59 @@
+# Solutions
+
+## 1. A store claims that customers spend an average of $74.40 when they visit the store. A random sample of 40 customers was timed at the deli counter, and the average amount spent was found to be $75.13. Assume the sample's standard deviation is $9.97 per customer. Use alpha equals 0.01.
+
+### 1a. Does this sample provide enough evidence to counter the claim made by the store?
+
+1. Figure out the hypothesis (DRAW IT OUT!)
+    - It does not say anything about direction, so it is a two tailed test
+    - $H0: \mu = 74.40$
+    - $H1: \mu \neq 74.40$
+
+2. Calculate SE
+    - $9.97 / \sqrt{40} = 1.58$
+
+3. Calculate test statistic
+    - $(75.13 - 74.4) / 1.58 = 0.46$
+    
+4. Calculate CV
+    - Since this is a two-tailed test, there are two CVs.
+    - =T.INV.2T(0.01, 39-1) $\rightarrow \pm 2.708$
+
+5. Calculate p-value
+    - The test statistic is positive, so we work with the nearest tail, which is the upper tail
+    - =2*(1-T.DIST(0.46)) $\rightarrow 0.648$
+    
+6. Interpret
+    1. Since the p-value is greater than the alpha, we fail to reject the null hypothesis, and conclude that there is no evidence to suggest that the average amount spent is not $74.40.
+    2. Since our critical value falls in the rejection region, we can reject the null.
+    
+***
+
+## 2. An advertising agency believes the average age of its target audience is 15 or less. A random sample of 10 people was surveyed, and the average age was found to be 17.8 years. The sample's standard deviation is 3.19. Does the sample provide enough evidence to refute the age claim made by the advertising agency store?
+
+1. Figure out the hypothesis (DRAW IT OUT!)
+    - It says the company believes that it is **less**. Since we are trying to counter them, assume that it actually is less, and use this as the null. This means we are trying to gather evidence to show if it is actually MORE (this is the counter.)
+    - $H0: \leq = 15$
+    - $H1: > \neq 15$
+    - This is an upper tailed test.
+    
+2. Calculate SE
+    - $3.19 / \sqrt{10} = 1.009$
+
+3. Calculate test statistic
+    - $(17.8 - 15) / 1.009 = 2.78$
+    
+4. Calculate CV
+    - Remember, this is an upper tailed test.
+    - =1-T.INV(1-(0.05)) $\rightarrow \pm 1.833$
+
+5. Calculate p-value
+    - =T.DIST.RT(2.78, 10 -1) $\rightarrow 0.011$
+    
+6. Interpret
+    1. Since the p-value is less than the alpha, we can reject the null hypothesis, and conclude that the average age is not 15
+    2. Since our test statistic falls in the rejection region, we can reject the null.
+
+<center>  
+![](www/curve.png)
+</center>

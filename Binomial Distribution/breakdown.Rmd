@@ -1,0 +1,95 @@
+The binomial distribution deals with *discrete* data, which means that the data
+is countable. For example, this could be the number of heads that are observed
+in a certain number of coin tosses, or how many times a one on a die is rolled. 
+The binomial distribution assigns probabilities to these situations, using three
+key aspects:
+
+1. **n**: This designates the total number of trials that were in our experiment.
+    + Ex: Let's continue with the coin flip example. Let's say we are flipping
+    the coin $n=2$ times.
+
+2. **x**: This designates the total number of successful events we have.
+    + Ex: For our experiment, let's say a successful event is landing heads up.
+    (A quick note, a success does not necessarily have to be a "good" or 
+    desirable event.)
+
+3. **p**: This is the probability of having a successful event. 
+    + Ex: It is common knowledge that a fair coin has a $p=0.5$ chance of landing
+    heads, which is the event we have deemed successful previously.
+
+## A motivating example 
+
+Now what if I asked you to find the probability of getting zero heads in two
+coin flips (to go with the math notation, $x=0$)? This isn't too hard to figure
+out quickly by hand, since our $n$ is fairly small and our probability is easy
+enough to work with. If we get 0 heads, that means we have 2 tails. The
+probability of getting two tails is $\frac{1}{2}\times\frac{1}{2} =
+\frac{1}{4}$.
+
+What about only one head? This is a little trickier, but still not too bad. 
+There are two sitations that can happen: either we get a head on our first flip
+and a tail on our second flip, or a tail on our first flip and a head on the 
+second flip. We can simply solve $(\frac{1}{2}\times\frac{1}{2}) + (\frac{1}{2}\times\frac{1}{2}) = \frac{1}{2}$. Similarly, we can see that two heads is the same probability of 
+getting two heads is the same as two tails.
+
+## A slightly more complicated example
+
+Let's change our experiment to dice rolling, and we'll say a successful event is
+rolling a three We'll assume the dice is fair. We know for one roll, our
+probability is $\frac{1}{6}$. But say our n was slightly larger than our
+previous experiment, and we had 5 rolls. This makes things slightly more
+complicated, but it's still manageable. Let's say we want to find the
+probability for $x=2$, or getting exactly two rolls with the side of three
+showing.
+
+Unlike the coin problem, we can't really do this in our head (and if you can,
+I'm jealous). What makes this so tricky, is that there is now an issue that
+might not have been obvious in the previous problem. Not only do we have to take
+into consideration how many events occur, but the order in which they occurred,
+for all possible outcomes. There are many orderings where two threes can happen.
+The first two rolls could both be three, and since we are looking for **only**
+two successes, the rest must be something other than a three. But, you also
+could roll a three, and then something else, and then a three on your third
+roll. Or your fourth roll. Or even your fifth. This is the idea of 
+**combinations**.
+
+You may have previously seen combinations in other classes, but if you haven't,
+they look something like this $n \choose x$, which is read as "n choose x." This
+can be interpreted as "out of the n trials, how many different orderings 
+(combinations) are there when there are x successful events?" Mathematically, 
+$n \choose x$ is defined as the following:
+
+$${n \choose x} = \frac{n!}{x! (n-x)!}$$
+
+The exclamation point means **factorial**. Factorial is a nice way of writing a
+sequence of numbers that are multiplied sequentially from 1 to the specified 
+number. So for example, $4! = 4 \times 3 \times 2 \times 1$.
+
+So in our example, we have 
+
+$${5 \choose 2} = \frac{5!}{2! (5-2)!} = \frac{5\times4\times3\times2\times1}{(2\times1)(3\times2\times1)}$$
+
+But, we can do some nifty cancelling, to arrive at
+
+$$= \frac{5\times4}{2\times1} = 10$$
+
+So this means there are 10 different combinations for the appearances of 
+two threes in five rolls. 
+
+We are almost finished. If there are five rolls, and two of the rolls are
+threes, this means that our two successful events occurred with probability
+$\frac{1}{6}$, and that the three failure events happened with probability
+$\frac{5}{6}$. So we are left with 
+
+$$\frac{1}{6}\times\frac{1}{6}\times\frac{1}{5}\times\frac{1}{5}\times\frac{1}{5} = (\frac{1}{6})^2(\frac{1}{5})^4$$
+
+But since these fractions don't take into account the combinations, we add that
+information in to we get the following.
+
+$$P(\text{Rolling two threes out of 5 rolls}) \rightarrow P(X=2) = {5 \choose 2}(\frac{1}{6})^2(\frac{1}{5})^4 = 0.193$$
+
+This is precisely the definition of the binomial distribution.
+
+<center>  
+![](www/curve.png)
+</center>

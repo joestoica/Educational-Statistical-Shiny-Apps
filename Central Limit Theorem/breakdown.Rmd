@@ -1,6 +1,3 @@
-# The Central Limit Theoreom
-
-
 ## The Sampling Distribution of Sample Means
 
 * The sampling distribution of sampling describes the pattern that sample means follow
@@ -79,3 +76,7 @@ increases?
 * What happens to the width of the interval when the sample size increases?
     + Since the sample size is in the denominator of the standard error, this
     is going to make the width smaller as n grows larger. 
+
+<center>  
+![](www/curve.png)
+</center>
