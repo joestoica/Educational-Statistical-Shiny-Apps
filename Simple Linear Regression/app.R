@@ -12,28 +12,28 @@ ui <- fluidPage(
         ),
         tabPanel(
             "Simple Linear Regression Visualization",
-            sidebarLayout(
-                sidebarPanel(
-                    selectInput("col1",
-                                "First column from example data",
-                                choices = c("Sepal.Length", "Sepal.Width", "Petal.Length", "Petal.Width"),
-                                selected = "Sepal.Length"
-                    ),
-                    selectInput("col2",
-                                "Second column from example data",
-                                choices = c("Sepal.Length", "Sepal.Width", "Petal.Length", "Petal.Width"),
-                                selected = "Sepal.Width"
-                    ),
-                ),
-                mainPanel(
-                    tableOutput("table1"),
-                    tableOutput("table2"),
-                    tableOutput("table3"),
-                    plotOutput("plot"),
-                    style="background-color: #f3f3f3; 
+            # sidebarLayout(
+            #     sidebarPanel(
+            #         selectInput("col1",
+            #                     "First column from example data",
+            #                     choices = c("Sepal.Length", "Sepal.Width", "Petal.Length", "Petal.Width"),
+            #                     selected = "Sepal.Length"
+            #         ),
+            #         selectInput("col2",
+            #                     "Second column from example data",
+            #                     choices = c("Sepal.Length", "Sepal.Width", "Petal.Length", "Petal.Width"),
+            #                     selected = "Sepal.Width"
+            #         ),
+            #     ),
+            # )
+            mainPanel(
+                tableOutput("table1"),
+                tableOutput("table2"),
+                tableOutput("table3"),
+                plotOutput("plot"),
+                style="background-color: #f3f3f3; 
                     border-color: #e3e3e3;
                     padding-bottom: 32px"  
-                )
             )
         )
     )    
@@ -43,24 +43,22 @@ set.seed(301)
 
 server <- function(input, output) {
     
+    fit = reactive({
+        lm(price ~ carat, diamonds)
+    })
+    
     format_output <- function(chr){
         r <- format(round(chr, 3), scientific = FALSE)
-        if(sum(r == "0") > 0){
+        if (sum(r == "0") > 0) {
             return(format(chr, scientific = TRUE))
-        }else{
+        } else {
             return(r)
         }
     }
     
     output$table1 <- renderTable({
         
-        col1 = input$col1
-        col2 = input$col2
-        
-        df = iris[, c(col1, col2)]
-        names(df) = c("X1", "X2")
-        fit = lm(X2 ~ X1, df)
-        
+        fit = fit()
         table_1_names =c("Multiple R",
                          "R Square",
                          "Adjusted R Square",
@@ -71,7 +69,7 @@ server <- function(input, output) {
                    format_output(summary(fit)$r.squared),
                    format_output(summary(fit)$adj.r.squared), 
                    format_output(summary(fit)$sigma),
-                   format_output(nrow(df)))
+                   format_output(nrow(fit$model)))
         
         data.frame(table_1_names, Values) %>% 
             rename(`Regression Statistics` = "table_1_names") 
@@ -80,11 +78,7 @@ server <- function(input, output) {
     
     output$table2 <- renderTable({
         
-        col1 = input$col1
-        col2 = input$col2
-        df = iris[, c(col1, col2)]
-        names(df) = c("X1", "X2")
-        fit = lm(X2 ~ X1, df)
+        fit = fit()
         
         dfr <- format_output(anova(fit)$Df[1])
         dfe <- format_output(anova(fit)$Df[2])
@@ -96,7 +90,6 @@ server <- function(input, output) {
         mse <- format_output(anova(fit)$Mean[2])
         Fanova <- format_output(anova(fit)$F[1])
         panova <- format_output(anova(fit)$Pr[1])
-        
         
         ANOVA = c("Regression", "Residual", "Total")
         df = c(dfr, dfe, dft)
@@ -111,12 +104,7 @@ server <- function(input, output) {
     })
     
     output$table3 <- renderTable({
-        col1 = input$col1
-        col2 = input$col2
-        df = iris[, c(col1, col2)]
-        names(df) = c("X1", "X2")
-        fit = lm(X2 ~ X1, df)
-        
+        fit = fit()
         coef_info <- as.data.frame(cbind(summary(fit)$coef, confint(fit, level = .95)))
         names(coef_info) <- c("Coefficients", "Standard Error", "t Stat", "P-value", "Lower 95%", "Upper 95%")
         row.names(coef_info) <- c("Intercept", "Var1")
@@ -128,27 +116,17 @@ server <- function(input, output) {
             rename("Variable" = "rowname")
     })
     
-    # Top plot in the first visual page of app
     output$plot <- renderPlot({
         
-        col1 = input$col1
-        col2 = input$col2
-        
-        df = iris[, c(col1, col2)]
-        name = c(col1, col2)
-        names(df) = c("X1", "X2")
-        s = summary(lm(X2 ~ X1, df))
-        coef = round(s$coefficients,2)
-        line = paste0(coef[1,1], " + ", coef[2,1], "x")
-        
-        df %>%
-            ggplot(aes(X1, X2)) +
+        fit = fit()
+        fit$model %>%
+            ggplot(aes(carat, price)) +
             geom_point() +
             geom_smooth(method = "lm", color = "red", se = FALSE) +
             theme_minimal() +
-            labs(x = name[1],
-                 y = name[2],
-                 title = paste0("Regression for Iris columns ", name[2], " vs. ", name[1]))
+            labs(x = "Carat",
+                 y = "Price",
+                 title = paste0("Simple Linear Regression Model for predicting Diamond prices using Carat"))
     })
 } 
 

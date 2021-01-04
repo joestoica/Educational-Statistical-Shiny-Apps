@@ -15,11 +15,11 @@ ui <- fluidPage(
                 sidebarPanel(
                     selectInput("data",
                                 "Select Data",
-                                choices = c("iris", "diamonds"),
-                                selected = "iris"
+                                choices = c("Iris", "Cars"),
+                                selected = "Cars"
                     ),
                     selectInput("remove",
-                                "Remove column?",
+                                "Remove variable with highest p-value?",
                                 choices = c("yes", "no"),
                                 selected = "no"
                     ),
@@ -36,41 +36,45 @@ ui <- fluidPage(
     )    
 )
 
-set.seed(301)
-
 server <- function(input, output) {
+    
+    fit <- reactive({
+        data = input$data
+        remove = input$remove
+        
+        if (data == "Iris") {
+            df = iris
+            if (remove == "yes") {
+                lm(Sepal.Width ~ Sepal.Length + Petal.Length + Petal.Width, iris)
+            } else {
+                lm(Sepal.Width ~ Sepal.Length + Petal.Length + Petal.Width + Species, iris)
+            }
+        } else {
+            cars = mtcars
+            names(cars) = c("mpg", "cylinders", "dispacement", "horsepower", 
+                            "drat", "weight", "quarter_mile_time", "vs", 
+                            "transmission_type", "gear", "carb")
+            df = cars
+            
+            if (remove == "yes") {
+                lm(mpg ~ weight + quarter_mile_time + transmission_type, cars)
+            } else {
+                lm(mpg ~ horsepower + weight + quarter_mile_time + transmission_type, cars)
+            }
+        }  
+    })
     
     format_output <- function(chr){
         r <- format(round(chr, 3), scientific = FALSE)
-        if(sum(r == "0") > 0){
+        if (sum(r == "0") > 0) {
             return(format(chr, scientific = TRUE))
-        }else{
+        } else {
             return(r)
         }
     }
     
-    #    output$table1 <- function() {
     output$table1 <- renderTable({
-        
-        data = input$data
-        remove = input$remove
-        
-        if (data == "iris") {
-            df = iris
-            if (remove == "yes") {
-                fit = lm(Sepal.Width ~ Sepal.Length + Petal.Length + Petal.Width, iris)
-            } else {
-                fit = lm(Sepal.Width ~ Sepal.Length + Petal.Length + Petal.Width + Species, iris)
-            }
-        } else {
-            df = diamonds
-            if (remove == "yes") {
-                fit = lm(price ~ carat + cut + clarity, diamonds)    
-            } else {
-                fit = lm(price ~ carat + cut + clarity + table, diamonds)    
-            }
-            
-        }
+        mod = fit()
         
         table_1_names =c("Multiple R",
                          "R Square",
@@ -78,100 +82,54 @@ server <- function(input, output) {
                          "Standard Error",
                          "Observations")
         
-        Values = c(format_output(sqrt(summary(fit)$r.squared)),
-                   format_output(summary(fit)$r.squared),
-                   format_output(summary(fit)$adj.r.squared), 
-                   format_output(summary(fit)$sigma),
-                   format_output(nrow(df)))
-        
-        data.frame(table_1_names, Values) %>% 
+        Values = c(format_output(sqrt(summary(mod)$r.squared)),
+                   format_output(summary(mod)$r.squared),
+                   format_output(summary(mod)$adj.r.squared),
+                   format_output(summary(mod)$sigma),
+                   format_output(nrow(mod$model)))
+
+        data.frame(table_1_names, Values) %>%
             rename(`Regression Statistics` = "table_1_names")
         
     })
     
-#    output$table2 <- function(){
     output$table2 <- renderTable({
-        
-        data = input$data
-        remove = input$remove
-        
-        if (data == "iris") {
-            df = iris
-            if (remove == "yes") {
-                fit = lm(Sepal.Width ~ Sepal.Length + Petal.Length + Petal.Width, iris)
-            } else {
-                fit = lm(Sepal.Width ~ Sepal.Length + Petal.Length + Petal.Width + Species, iris)
-            }
-        } else {
-            df = diamonds
-            if (remove == "yes") {
-                fit = lm(price ~ carat + cut + clarity, diamonds)    
-            } else {
-                fit = lm(price ~ carat + cut + clarity + table, diamonds)    
-            }
-            
-        }
-        
-        dfr <- format_output(anova(fit)$Df[1])
-        dfe <- format_output(anova(fit)$Df[2])
-        dft <- format_output(sum(anova(fit)$Df))
-        ssr <- format_output(anova(fit)$Sum[1])
-        sse <- format_output(anova(fit)$Sum[2])
-        sst <- format_output(sum(anova(fit)$Sum))
-        msr <- format_output(anova(fit)$Mean[1])
-        mse <- format_output(anova(fit)$Mean[2])
-        Fanova <- format_output(anova(fit)$F[1])
-        panova <- format_output(anova(fit)$Pr[1])
-        
-        
+        mod = fit()
+        dfr <- format_output(anova(mod)$Df[1])
+        dfe <- format_output(anova(mod)$Df[2])
+        dft <- format_output(sum(anova(mod)$Df))
+        ssr <- format_output(anova(mod)$Sum[1])
+        sse <- format_output(anova(mod)$Sum[2])
+        sst <- format_output(sum(anova(mod)$Sum))
+        msr <- format_output(anova(mod)$Mean[1])
+        mse <- format_output(anova(mod)$Mean[2])
+        Fanova <- format_output(anova(mod)$F[1])
+        panova <- format_output(anova(mod)$Pr[1])
+
         ANOVA = c("Regression", "Residual", "Total")
         df = c(dfr, dfe, dft)
         SS = c(ssr, sse, sst)
         MS = c(msr, mse, "")
         F_col = c(Fanova, "", "")
         Significance = c(panova, "", "")
-        
-        
-        data.frame(ANOVA, df, SS, MS, F_col, Significance) %>% 
+
+        data.frame(ANOVA, df, SS, MS, F_col, Significance) %>%
             rename(`F Stat.` = "F_col")
-            
+
     })
-    
-    #output$table3 <- function(){
+
     output$table3 <- renderTable({
-        
-        # data = "iris"
-        # remove = "no"
-        data = input$data
-        remove = input$remove
-        
-        if (data == "iris") {
-            df = iris
-            if (remove == "yes") {
-                fit = lm(Sepal.Width ~ Sepal.Length + Petal.Length + Petal.Width, iris)
-            } else {
-                fit = lm(Sepal.Width ~ Sepal.Length + Petal.Length + Petal.Width + Species, iris)
-            }
-        } else {
-            df = diamonds
-            if (remove == "yes") {
-                fit = lm(price ~ carat + cut, diamonds)    
-            } else {
-                fit = lm(price ~ carat + cut + clarity, diamonds)    
-            }
-            
-        }
-        
-        coef_info <- as.data.frame(cbind(summary(fit)$coef, confint(fit, level = .95)))
+        mod = fit()
+        coef_info <- as.data.frame(cbind(summary(mod)$coef, confint(mod, level = .95)))
         names(coef_info) <- c("Coefficients", "Standard Error", "t Stat", "P-value", "Lower 95%", "Upper 95%")
         coef_info$`P-value` <- format_output(coef_info$`P-value`)
         coef_info[,-4] <- round(coef_info[,-4],3)
-        
-        coef_info %>% 
-            rownames_to_column() %>% 
+
+        coef_info %>%
+            rownames_to_column() %>%
             rename("Variable" = "rowname")
     })
-    
+
 } 
 
 shinyApp(ui = ui, server = server)
