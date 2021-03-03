@@ -1,9 +1,6 @@
 # Some practice problems
 
-## 1
-
-Nancy has a coin that has a 75% of showing heads when it is flipped. What is the
-chance she is going to flip the coin 5 times? Assume each toss is independent.
+## 1 Nancy has a coin that has a 75% of showing heads when it is flipped. What is the chance she is going to flip the coin 5 times? Assume each toss is independent.
 
 ### 1a. Identify x, n, and p
 
@@ -15,13 +12,7 @@ chance she is going to flip the coin 5 times? Assume each toss is independent.
 
 ***
 
-## 2
-
-A car insurance company has determined that 9% of all drivers were involved in a
-car accident last year. Among the 14 drivers living on one particular street, 3
-were involved in a car accident last year. If the 14 drivers are randomly
-selected, what is the probability of getting at most 2 drivers who were involved
-in a car accident last year? Assume each accident is independent.
+## 2 A car insurance company has determined that 9% of all drivers were involved in a car accident last year. Among the 14 drivers living on one particular street, 3 were involved in a car accident last year. If the 14 drivers are randomly selected, what is the probability of getting at most 2 drivers who were involved in a car accident last year? Assume each accident is independent.
 
 ### 2a. Identify x, n, and p
 
@@ -33,11 +24,7 @@ in a car accident last year? Assume each accident is independent.
 
 ***
 
-## 3
-
-A car salesman has 20 cars in his lot. He feels that there is a 40% chance of
-selling any one car during the week. Compute the probability of selling less
-than 5 cars in one week. Assume each sale is independent.
+## 3 A car salesman has 20 cars in his lot. He feels that there is a 40% chance of selling any one car during the week. Compute the probability of selling less than 5 cars in one week. Assume each sale is independent.
 
 ### 3a. Identify x, n, and p
 
@@ -49,11 +36,7 @@ than 5 cars in one week. Assume each sale is independent.
 
 ***
 
-## 4
-
-A star basketball player shoots 20 shots during his game. His shooting accuracy 
-is 85%. Find the probability that he makes more than 15 of his shots in one 
-game. Assume each shot is independent.
+## 4 A star basketball player shoots 20 shots during his game. His shooting accuracy  is 85%. Find the probability that he makes more than 15 of his shots in one  game. Assume each shot is independent.
 
 ### 4a. Identify x, n, and p
 
