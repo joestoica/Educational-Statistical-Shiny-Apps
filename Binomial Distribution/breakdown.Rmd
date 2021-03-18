@@ -60,12 +60,12 @@ $${5 \choose 2} = \frac{5!}{2! (5-2)!} = \frac{5\times4\times3\times2\times1}{(2
 two successful events occurred with probability $\frac{1}{6}$, and that the 
 three failure events happened with probability $\frac{5}{6}$. So we are left with 
 
-$$\frac{1}{6}\times\frac{1}{6}\times\frac{1}{5}\times\frac{1}{5}\times\frac{1}{5} = (\frac{1}{6})^2(\frac{1}{5})^3$$
+$$\frac{1}{6}\times\frac{1}{6}\times\frac{5}{6}\times\frac{5}{6}\times\frac{5}{6} = (\frac{1}{6})^2(\frac{5}{6})^3$$
 
 - the fractions don't take into account the combinations, so we add that 
 information in to get the following.
 
-$$P(\text{Rolling two 3s out of 5 rolls}) \rightarrow P(X=2) = {5 \choose 2}(\frac{1}{6})^2(\frac{1}{5})^3 = 0.193$$
+$$P(\text{Rolling two 3s out of 5 rolls}) \rightarrow P(X=2) = {5 \choose 2}(\frac{1}{6})^2(\frac{5}{6})^3 = 0.193$$
 <center>  
 ![](www/curve.png)
 </center>

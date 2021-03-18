@@ -8,31 +8,19 @@ deviation is \$25.00 and that a random sample of 49 hotels was selected.
 
 ### 1a. Calculate the standard error of the mean.
 
-### 1b. What is the probability that the sample mean will be less than \$280?
+### 1b. What is the probability that the sample mean will be less than \$262?
 
-### 1c. What is the probability that the sample mean will be greater than \$300?
+### 1c. What is the probability that the sample mean will be greater than \$280?
 
-### 1d. What is the probability that the sample mean will be between \$245 and \$305? 
+### 1d. What is the probability that the sample mean will be between \$268 and \$282? 
 
 ***
 
-## 2
+## 2 According to a study, college students spent 1.7 hours per day using Instagram. Assume the population standard deviation is 0.4 hours per day. A random sample of 32 students were selected, and had a sample average of 1.9 hours ofelectronic media use per day.
 
-According to a study, college students spent 1.7 hours per day using Instagrame.
-Assume the population standard deviation is 0.4 hours per day. A random sample
-of 32 students were selected, and had a sample average of 1.9 hours of
-electronic media use per day.
+### 2a. Is there support for the claim of the study using the criteria that the sample average of 1.9 hours falls within the symmetrical interval that includes 95% othe sample means if the true population mean is 1.7 hours?
 
-### 2a. 
-
-Is there support for the claim of the study using the criteria that the sample
-average of 2.1 hours falls within the symmetrical interval that includes 95% of
-the sample means if the true population mean is 1.7 hours?
-
-### 2b.
-
-Identify the symmetrical interval that includes 95% of the sample means if the
-true population mean is 1.7 hours of electronic media use per day.
+### 2b. Identify the symmetrical interval that includes 95% of the sample means if the true population mean is 1.9 hours of electronic media use per day.
 
 ***
 

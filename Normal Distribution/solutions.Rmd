@@ -54,7 +54,7 @@ the excel formulas. $=\text{NORM.S.DIST}(-0.25, TRUE) - \text{NORM.S.DIST}(-2.5,
 
 This is much simpler, we can just use NORM.S.DIST here.
 
-$ P(Z < -1.23) = \text{NORM.S.DIST}(-1.23, TRUE)$
+$P(Z < -1.23) = \text{NORM.S.DIST}(-1.23, TRUE)$
 
 ### 3b. P(Z > 2.89)
 

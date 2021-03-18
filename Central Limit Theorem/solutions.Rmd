@@ -32,7 +32,7 @@ $$(\frac{282 - 275}{3.57}) = 1.96$$
 
 $$(\frac{268 - 275}{3.57}) = -1.96$$
 
-$=NORM.S.DIST(1.96, TRUE) - NORM.S.DIST(-1.96, TRUE)= 95$
+$=NORM.S.DIST(1.96, TRUE) - NORM.S.DIST(-1.96, TRUE)= 0.95$
 
 ```{r}
 xbar = 268
@@ -48,18 +48,9 @@ pnorm(1.96)- pnorm(-1.96)
 
 ***
 
-## 2. 
+## 2. According to a study, college students spent 1.7 hours per day using Instagram. Assume the population standard deviation is 0.4 hours per day. A random sample of 32 students were selected, and had a sample average of 1.9 hours of electronic media use per day.
 
-According to a study, college students spent 1.7 hours per day using Instagram.
-Assume the population standard deviation is 0.4 hours per day. A random sample
-of 32 students were selected, and had a sample average of 2.1 hours of
-electronic media use per day.
-
-### 2a. 
-
-Is there support for the claim of the study using the criteria that the sample
-average of 1.9 hours falls within the symmetrical interval that includes 95% of
-the sample means if the true population mean is 1.7 hours?
+### 2a.  Is there support for the claim of the study using the criteria that the sample average of 1.9 hours falls within the symmetrical interval that includes 95% of the sample means if the true population mean is 1.7 hours?
 
 
 Calculate the standard error:
@@ -74,13 +65,9 @@ $$z = \frac{1.9 - 1.7}{0.07071068} = 2.828$$
 
 $$=1-NORM.S.DIST(2.828) = 0.0023$$
 
-Therefore this indicates that the sample average of 1.9 hours falls outside the
-95% symmetrical interval, contradicting the claim of the study.
+Therefore this indicates that the sample average of 1.9 hours falls outside the 95% symmetrical interval, contradicting the claim of the study.
 
-### 2b.
-
-Identify the symmetrical interval that includes 95% of the sample means if the
-true population mean is 1.7 hours of Instagram use per day.
+### 2b. Identify the symmetrical interval that includes 95% of the sample means if the true population mean is 1.7 hours of Instagram use per day.
 
 $$=NORM.S.INV(1-(1-0.95)/2) = 1.96$$
 

@@ -13,7 +13,7 @@
     distribution, then the sampling distribution will **also follow the normal
     distribution.**
     + If the size of the samples are **greater than 30 (a.k.a. sufficiently
-    large)**, then the sampling distribution will be** normally distributed
+    large)**, then the sampling distribution will be **normally distributed
     regardless of the shape of the population distribtion.**
     
 ![](sizes.jpg)

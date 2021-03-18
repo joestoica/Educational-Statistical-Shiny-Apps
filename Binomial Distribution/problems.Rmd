@@ -36,7 +36,7 @@
 
 ***
 
-## 4 A star basketball player shoots 20 shots during his game. His shooting accuracy  is 85%. Find the probability that he makes more than 15 of his shots in one  game. Assume each shot is independent.
+## 4 A star basketball player shoots 25 shots during his game. His shooting accuracy  is 85%. Find the probability that he makes more than 15 of his shots in one  game. Assume each shot is independent.
 
 ### 4a. Identify x, n, and p
 
